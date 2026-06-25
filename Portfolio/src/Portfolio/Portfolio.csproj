@@ -9,12 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bluehill.Blazor.GHPages" Version="1.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.9" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\logo\" />
   </ItemGroup>
 
 </Project>

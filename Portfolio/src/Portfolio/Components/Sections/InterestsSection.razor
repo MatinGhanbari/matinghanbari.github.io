@@ -1,0 +1,33 @@
+<section class="sec" id="interests">
+    <div class="sec-marker">
+        <span class="num">06</span>
+        <span>Interests</span>
+        <span class="rule"></span>
+    </div>
+
+    <p style="margin-top: 0; max-width: 60ch; color: var(--fg-dim);">
+        Outside of work — sport, travel and the slopes. New tech and new techniques are a constant.
+    </p>
+
+    <div class="interests-grid">
+        @foreach (var it in Entries)
+        {
+            <div class="interest">
+                <div class="k">@it.Kind</div>
+                <div class="v">@it.Value</div>
+            </div>
+        }
+    </div>
+</section>
+
+@code {
+    private record Entry(string Kind, string Value);
+
+    private static readonly Entry[] Entries =
+    {
+        new("Sport",  "HEMA · Historical Fencing"),
+        new("Sport",  "Soccer & Billiard"),
+        new("Travel", "New places, new cultures"),
+        new("Winter", "Snowboarding"),
+    };
+}

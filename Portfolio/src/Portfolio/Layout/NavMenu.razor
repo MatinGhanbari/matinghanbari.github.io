@@ -1,39 +1,67 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Portfolio</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Nav
+@implements IAsyncDisposable
+@using Portfolio.Services
+
+<div class="sb-brand-row">
+    <a class="sb-brand" href="/#about" @onclick="GoHome" @onclick:preventDefault>
+        <img class="sb-avatar" src="assets/profile1.jpg" alt="Matin Ghanbari" />
+        <div>
+            <div class="sb-name">Matin Ghanbari</div>
+            <div class="sb-role">Software Engineer</div>
+        </div>
+    </a>
+    <button type="button"
+            class="sb-mobile-toggle"
+            aria-label="@(_drawerOpen ? "Close menu" : "Open menu")"
+            aria-expanded="@_drawerOpen.ToString().ToLower()"
+            @onclick="ToggleDrawer">
+        @(_drawerOpen ? "✕" : "☰")
+    </button>
+</div>
+
+<div class="sb-mobile-drawer @(_drawerOpen ? "open" : "")">
+    <div class="sb-section-label">// Sections</div>
+    <nav class="sb-nav">
+        @foreach (var item in Sections)
+        {
+            <a href="/#@item.Id"
+                class="@(IsHomeRoute && activeSection == item.Id ? "active" : null)"
+                @onclick="() => GoSection(item.Id)" @onclick:preventDefault>
+                <span class="idx">@item.Idx</span>
+                <span>@item.Label</span>
+                <span class="arrow">→</span>
+            </a>
+        }
+    </nav>
+
+    <div class="sb-section-label">// More</div>
+    <nav class="sb-nav">
+        <NavLink href="/repositories" Match="NavLinkMatch.All" ActiveClass="active"
+                    @onclick="CloseDrawer">
+            <span class="idx">07</span>
+            <span>Public Repositories</span>
+            <span class="arrow">→</span>
+        </NavLink>
+    </nav>
+
+    <div class="sb-foot">
+        <div class="sb-socials">
+            <a href="https://www.linkedin.com/in/jan-mesarc/" target="_blank" rel="noopener" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://github.com/matinghanbari" target="_blank" rel="noopener" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://matinghanbari.itch.io/" target="_blank" rel="noopener" title="itch.io"><i class="fa-brands fa-itch-io"></i></a>
+            <a href="https://twitter.com/matinghanbari" target="_blank" rel="noopener" title="Twitter" aria-label="Twitter / X">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+            <a href="https://mastodon.gamedev.place/@@jame_581" target="_blank" rel="noopener" title="Mastodon"><i class="fa-brands fa-mastodon"></i></a>
+        </div>
+        <div class="sb-meta">
+            <span>build @BuildInfo.Stamp</span>
+            <span><span class="dot">●</span> v2.0</span>
+        </div>
     </div>
 </div>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
 
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}

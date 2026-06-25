@@ -1,0 +1,132 @@
+@inject IJSRuntime JS
+
+<section class="sec" id="projects">
+    <div class="sec-marker">
+        <span class="num">03</span>
+        <span>Shipped Titles &amp; Projects</span>
+        <span class="rule"></span>
+    </div>
+
+    <h2 style="margin-bottom: 6px;">Professional</h2>
+    <p style="margin: 0 0 18px; color: var(--fg-dim); font-size: 14px;">
+        Commercial titles I&rsquo;ve contributed to as a gameplay or systems programmer.
+    </p>
+
+    <div class="strip-controls">
+        <span class="count">@ShippedTitles.Length titles · scroll →</span>
+        <div class="nav">
+            <button type="button" aria-label="Previous" @onclick="() => Scroll(-1)">‹</button>
+            <button type="button" aria-label="Next" @onclick="() => Scroll(1)">›</button>
+        </div>
+    </div>
+
+    <div class="strip-wrap">
+        <div class="strip" @ref="stripEl">
+            @foreach (var p in ShippedTitles)
+            {
+                <article class="proj">
+                    <div class="cover">
+                        <img src="@p.Img" alt="@p.Title" loading="lazy" />
+                        <span class="badge">@p.Badge</span>
+                    </div>
+                    <div class="body">
+                        <div class="pmeta">
+                            <span class="yr">@p.Year</span>
+                            <span>·</span>
+                            <span>@p.Role</span>
+                        </div>
+                        <h4>@p.Title</h4>
+                        <p class="desc">@p.Desc</p>
+                        <div class="links">
+                            @foreach (var l in p.Links)
+                            {
+                                <a href="@l.Href" target="_blank" rel="noopener">@l.Label ↗</a>
+                            }
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    </div>
+
+    <h2 style="margin: 56px 0 6px;">Itch.io · Jams &amp; Experiments</h2>
+    <p style="margin: 0 0 4px; color: var(--fg-dim); font-size: 14px;">
+        Smaller games and prototypes — most made in jams with friends.
+    </p>
+
+    <div class="itch-grid">
+        @foreach (var g in ItchEntries)
+        {
+            <a class="itch-card reveal" href="@g.Href" target="_blank" rel="noopener">
+                <div class="top">
+                    <h5>@g.Title</h5>
+                    <span class="yr">@g.Year</span>
+                </div>
+                <p>@g.Desc</p>
+                <div class="row">
+                    <span>matinghanbari.itch.io</span>
+                    <span class="play">play ↗</span>
+                </div>
+            </a>
+        }
+    </div>
+</section>
+
+@code {
+    private ElementReference stripEl;
+
+    private async Task Scroll(int dir) =>
+        await JS.InvokeVoidAsync("PortfolioScrollStrip", stripEl, dir);
+
+    private record Shipped(string Title, string Year, string Badge, string Img,
+                           string Desc, string Role, ProjectLink[] Links);
+    private record ProjectLink(string Label, string Href);
+    private record ItchEntry(string Title, string Year, string Desc, string Href);
+
+    private static readonly Shipped[] ShippedTitles =
+    {
+        new("The Last Oricru", "2022", "Gameplay Systems", "images/the-last-oricru.jpg",
+            "Story-driven action-RPG set in a sci-fi medieval world, focused on impactful player choices and co-op gameplay.",
+            "Gameplay & networking · Unreal · C++",
+            new[]
+            {
+                new ProjectLink("Steam", "https://store.steampowered.com/app/1663640/The_Last_Oricru/"),
+                new ProjectLink("Site",  "https://lastoricru.com/"),
+            }),
+        new("Phantom Fury", "2024", "Gameplay Systems", "images/phantom-fury.jpg",
+            "Retro-inspired first-person shooter with fast-paced action, creative weapons and a cross-country road trip.",
+            "Gameplay · Unreal · C++",
+            new[]
+            {
+                new ProjectLink("Steam", "https://store.steampowered.com/app/1733240/Phantom_Fury/"),
+                new ProjectLink("Site",  "https://www.slipgate-ironworks.com/phantom-fury/"),
+            }),
+        new("Beat Saber", "2018", "Live Ops · Updates", "images/beat-saber.jpg",
+            "Award-winning VR rhythm game where players slash beats to music. Contributing on live updates and platform work.",
+            "Gameplay · Unreal · C++",
+            new[]
+            {
+                new ProjectLink("Steam", "https://store.steampowered.com/app/620980/Beat_Saber/"),
+                new ProjectLink("Site",  "https://beatsaber.com/"),
+            }),
+        new("Darkest Dungeon", "2016", "Contributor", "images/darkest-dungeon.jpg",
+            "Challenging gothic roguelike turn-based RPG about the psychological stresses of adventuring.",
+            "Engineering support",
+            new[]
+            {
+                new ProjectLink("Steam", "https://store.steampowered.com/app/262060/Darkest_Dungeon/"),
+                new ProjectLink("Site",  "https://www.darkestdungeon.com/"),
+            }),
+    };
+
+    private static readonly ItchEntry[] ItchEntries =
+    {
+        new("Brain and Gut",        "2024", "Game-jam co-op chaos with three collaborators.", "https://matinghanbari.itch.io/brain-and-gut"),
+        new("Pocketwatch",          "2024", "A short, time-bending puzzle.",                  "https://matinghanbari.itch.io/pocketwatch"),
+        new("Stellar Secrets",      "2024", "Cosmic mystery built with a five-person team.",  "https://matinghanbari.itch.io/stellar-secrets"),
+        new("Night In The Mouseum", "2023", "Tiny adventure, after-hours museum.",            "https://matinghanbari.itch.io/night-in-the-mouseum"),
+        new("Shoot Numbers",        "2022", "Arcade arithmetic, fast and noisy.",             "https://matinghanbari.itch.io/shoot-numbers"),
+        new("Rocket of Milky Way",  "2022", "Cozy launch-and-land arcade loop.",              "https://matinghanbari.itch.io/romw"),
+        new("Submarinened",         "2022", "Submarine survival jam entry.",                  "https://matinghanbari.itch.io/submarinened"),
+    };
+}

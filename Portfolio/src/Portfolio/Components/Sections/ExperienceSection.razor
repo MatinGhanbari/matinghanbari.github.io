@@ -1,0 +1,123 @@
+<section class="sec" id="experience">
+    <div class="sec-marker">
+        <span class="num">02</span>
+        <span>Experience</span>
+        <span class="rule"></span>
+        <span>@Entries.Length entries</span>
+    </div>
+
+    <div class="xp-list">
+        @foreach (var e in Entries)
+        {
+            <div class="xp reveal">
+                <div class="when">
+                    @if (e.When.Contains("Now"))
+                    {
+                        @(e.When.Replace("Now", ""))<span class="now">Now</span>
+                    }
+                    else
+                    {
+                        @e.When
+                    }
+                </div>
+                <div class="role">
+                    <h3>@e.Role</h3>
+                    <div class="co">
+                        @if (!string.IsNullOrEmpty(e.Href))
+                        {
+                            <a href="@e.Href" target="_blank" rel="noopener">@e.Company ↗</a>
+                        }
+                        else
+                        {
+                            @e.Company
+                        }
+                    </div>
+                    <p class="desc">@e.Desc</p>
+                    <div class="tags">
+                        @foreach (var t in e.Tags)
+                        {
+                            <span class="tag">@t</span>
+                        }
+                        @if (e.Shipped is not null)
+                        {
+                            @foreach (var s in e.Shipped)
+                            {
+                                <span class="tag shipped">↳ @s</span>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@code {
+    private record Entry(
+        string When,
+        string Role,
+        string Company,
+        string? Href,
+        string Desc,
+        string[] Tags,
+        string[]? Shipped = null);
+
+    private static readonly Entry[] Entries =
+    {
+        new("Mar 2022 — Now",
+            "Software Developer · Gameplay Systems",
+            "Flying Rat Studio",
+            "https://www.flying-rat.studio/",
+            "Architecting and shipping gameplay systems in Unreal Engine (C++). Specialized in multiplayer networking, replication and core mechanics.",
+            new[] { "Unreal", "C++", "Networking" },
+            new[] { "The Last Oricru", "Phantom Fury", "Beat Saber" }),
+        new("Jan 2022 — Now",
+            "Independent Contractor · Full-Stack",
+            "Freelance",
+            null,
+            "Custom games, prototypes and cross-platform tooling. Godot, Unreal, .NET MAUI, ASP.NET — wherever the brief leads.",
+            new[] { "Godot", "Unreal", ".NET MAUI", "ASP.NET" }),
+        new("Jan 2021 — Jan 2022",
+            "Game Programmer · Gameplay & UI",
+            "Grip Digital",
+            "https://www.grip-digital.com/",
+            "Engineered gameplay mechanics and UI systems in Unreal Engine (C++) for PC and console.",
+            new[] { "Unreal", "C++", "UI" }),
+        new("Mar 2019 — Dec 2020",
+            ".NET Programmer · Backend & Cloud",
+            "Rationis",
+            "https://www.rationis.eu/",
+            "ARC remote-management system on .NET / ASP.NET / Xamarin Forms. Cloud-based architecture on Azure for Quadient Inspire Cloud.",
+            new[] { ".NET Core", "Azure", "React", "SQL" }),
+        new("Nov 2017 — Mar 2019",
+            "Junior .NET Programmer · Full-Stack",
+            "Unicorn",
+            "https://unicorn.com/",
+            "Energy-sector software for Nordic markets. Damas project — backend and frontend on Angular, Knockout, ASP.NET.",
+            new[] { ".NET", "Angular", "Knockout" }),
+        new("Jun 2017 — Oct 2018",
+            "Junior Programmer · .NET & Mobile",
+            "Profi Credit Czech a.s.",
+            null,
+            "Designed and shipped an internal Xamarin app, with WCF services bridging mobile to backend.",
+            new[] { "Xamarin", "WCF", "ASP.NET" }),
+        new("Apr 2017 — Mar 2018",
+            "Linux Administrator",
+            "3N",
+            null,
+            "Automated admin tasks; configured Docker, Nomad, Terraform and Ansible across servers.",
+            new[] { "Linux", "Docker", "Ansible" }),
+        new("Aug 2015 — Jan 2017",
+            "Junior Web Developer",
+            "Develox s.r.o",
+            null,
+            "Static sites, e-shops and web apps in ASP.NET / C# / HTML.",
+            new[] { "ASP.NET", "C#" }),
+        new("Apr 2013 — Mar 2014",
+            "IT Service Technician",
+            "VT Data",
+            "https://www.vtdata.cz/",
+            "Repaired and maintained computers, laptops, servers and printers. First step into the trade.",
+            new[] { "Hardware" }),
+    };
+}

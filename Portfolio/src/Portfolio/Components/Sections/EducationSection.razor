@@ -1,0 +1,39 @@
+<section class="sec" id="education">
+    <div class="sec-marker">
+        <span class="num">04</span>
+        <span>Education</span>
+        <span class="rule"></span>
+    </div>
+
+    @foreach (var e in Entries)
+    {
+        <div class="edu reveal">
+            <div class="when">@e.When</div>
+            <div>
+                <h3>@e.School</h3>
+                <div class="deg">@e.Degree</div>
+                <p>@e.Desc</p>
+            </div>
+        </div>
+    }
+</section>
+
+@code {
+    private record EduEntry(string When, string School, string Degree, string Desc);
+
+    private static readonly EduEntry[] Entries =
+    {
+        new("2017 — 2019",
+            "University of Pardubice",
+            "Master's · Information Technology",
+            "Advanced data structures, algorithms, design patterns. Thesis: cross-platform mobile app for smart-home. Taught Intro to C and C# for two years."),
+        new("2014 — 2017",
+            "University of Pardubice",
+            "Bachelor's · Information Technology",
+            "Foundations across Java, C/C++, C#. First contact with game development in Unity. Thesis: multi-platform Unity3D game."),
+        new("2010 — 2014",
+            "VOŠ a SŠT Česká Třebová",
+            "Electrical Engineering",
+            "Cisco CCNA modules 1–3. Networking and operating-systems coursework — where the IT path started."),
+    };
+}

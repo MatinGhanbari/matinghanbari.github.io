@@ -1,0 +1,6 @@
+# All bots
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://matinghanbari.github.io/sitemap.xml

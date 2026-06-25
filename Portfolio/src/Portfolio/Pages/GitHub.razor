@@ -1,0 +1,81 @@
+@page "/repositories"
+@inject HttpClient Http
+@inject NavigationManager Nav
+
+<PageTitle>Matin Ghanbari | Public Repositories</PageTitle>
+
+<div class="page">
+    <div class="sec-marker" style="margin-top: 32px;">
+        <span class="num">07</span>
+        <span>Public Repositories</span>
+        <span class="rule"></span>
+        <a href="/#about" style="color: var(--fg-dim);"
+           @onclick="GoHome" @onclick:preventDefault>← Back</a>
+    </div>
+
+    <div class="repos-head">
+        <div>
+            <h2 style="margin-bottom: 6px;">github.com/matinghanbari</h2>
+            <div class="meta">Public repos · sorted by recent activity</div>
+        </div>
+        <label class="repo-search">
+            <span>⌕</span>
+            <input @bind="query" @bind:event="oninput" placeholder="filter repositories…" />
+        </label>
+    </div>
+
+    <div class="repo-list">
+        @if (repositories is null)
+        {
+            <div class="repo-empty">Loading repositories…</div>
+        }
+        else
+        {
+            var filtered = Filter(repositories, query);
+            @if (filtered.Count == 0)
+            {
+                <div class="repo-empty">no repositories match &ldquo;@query&rdquo;</div>
+            }
+            else
+            {
+                @foreach (var r in filtered)
+                {
+                    <a class="repo" href="@r.Html_Url" target="_blank" rel="noopener">
+                        <div>
+                            <div class="name">
+                                @r.Name
+                                <span class="vis">public</span>
+                            </div>
+                            @if (!string.IsNullOrEmpty(r.Description))
+                            {
+                                <p>@r.Description</p>
+                            }
+                            <div class="stats">
+                                @if (!string.IsNullOrEmpty(r.Language))
+                                {
+                                    <span><span class="lang">●</span> @r.Language</span>
+                                }
+                                <span>★ @r.Stargazers_Count</span>
+                                <span>updated @Relative(r.Pushed_At ?? r.Updated_At)</span>
+                            </div>
+                        </div>
+                        <div class="right">↗</div>
+                    </a>
+                }
+            }
+        }
+    </div>
+</div>
+
+<style>
+    .repo-empty {
+        padding: 24px;
+        text-align: center;
+        color: var(--fg-muted);
+        font-family: var(--font-mono);
+        font-size: 12px;
+    }
+</style>
+
+
+<Footer />
