@@ -47,7 +47,7 @@
                     <a class="repo" href="@r.Html_Url" target="_blank" rel="noopener">
                         <div>
                             <div class="name">
-                                @r.Name
+                                @r.Name.Replace(".", " ")
                                 <span class="vis">public</span>
                             </div>
                             @if (!string.IsNullOrEmpty(r.Description))
