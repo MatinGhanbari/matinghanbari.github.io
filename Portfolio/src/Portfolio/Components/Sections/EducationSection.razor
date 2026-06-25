@@ -19,7 +19,7 @@
 </section>
 
 @code {
-    private record EduEntry(string When, string School, string Degree, string Desc);
+    private record EduEntry(string When, string School, string Degree, string? Desc);
 
     private static readonly EduEntry[] Entries =
     {
