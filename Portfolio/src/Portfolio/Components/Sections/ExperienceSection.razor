@@ -13,7 +13,8 @@
                 <div class="when">
                     @if (e.When.Contains("Now"))
                     {
-                        @(e.When.Replace("Now", ""))<span class="now">Now</span>
+                        @(e.When.Replace("Now", ""))
+                        <span class="now">Now</span>
                     }
                     else
                     {
@@ -64,60 +65,38 @@
 
     private static readonly Entry[] Entries =
     {
-        new("Mar 2022 — Now",
-            "Software Developer · Gameplay Systems",
-            "Flying Rat Studio",
-            "https://www.flying-rat.studio/",
-            "Architecting and shipping gameplay systems in Unreal Engine (C++). Specialized in multiplayer networking, replication and core mechanics.",
-            new[] { "Unreal", "C++", "Networking" },
-            new[] { "The Last Oricru", "Phantom Fury", "Beat Saber" }),
-        new("Jan 2022 — Now",
-            "Independent Contractor · Full-Stack",
-            "Freelance",
+        new("Nov 2025 – Present",
+            "Senior Software Engineer",
+            "PaygahKhodro",
+            "https://paygahkhodro.com/",
+            "Engineered a high-performance microservices architecture using .NET 9, DDD, and CQRS, optimizing database performance to drive an 8% increase in API responsiveness. Revolutionized CI/CD workflows for 20+ services, slashing deployment times by 45% through Docker optimization and caching strategies, while establishing structured observability and mentoring junior engineers to elevate team delivery standards.",
+            new[] { "C#", ".Net", "Blazor", "MSSQL", "Docker", "Microservices", "DDD" },
+            new[] { "+3 Junior developers mentoring" }),
+
+        new("May 2025 – Nov 2025",
+            "Software Engineer",
+            "Iran Airtour Airlines",
+            "https://iranairtour.ir/",
+            "Led the architectural modernization of core framework services, including an end-to-end migration to .NET 8 that substantially improved maintainability and production performance. Established and enforced rigorous code quality protocols and SOLID principles, effectively eliminating long-standing technical debt. Simultaneously optimized high-traffic API and database performance, securing a 27% improvement in response times for a platform serving 10,000+ users.",
+            new[] { ".NET 8", "C#", "SQL Server", "API Optimization", "SOLID", "Architecture", "Performance Tuning" },
+            null),
+
+            
+        new("Jun 2023 – Apr 2025",
+            "Backend Developer",
+            "Maxa Tech",
+            "https://iranairtour.ir/",
+            "Architected a scalable, high-performance microservices framework using DDD and CQRS to power a real-time monitoring platform deployed across 25+ enterprise clients with 25,000+ total users. Engineered a high-throughput gRPC event-streaming service and a dynamic task scheduling engine, replacing legacy polling mechanisms to decrease execution latency by 20% and achieve an overall system performance gain of 20%.",
+            new[] { "Microservices", "DDD", "CQRS", "gRPC", "Real-time Systems", "Event-Driven", "Task Scheduling" },
+            null),
+
+            
+        new("Apr 2023– May 2023",
+            "Backend Intern",
+            "Simac Tech Inc.",
             null,
-            "Custom games, prototypes and cross-platform tooling. Godot, Unreal, .NET MAUI, ASP.NET — wherever the brief leads.",
-            new[] { "Godot", "Unreal", ".NET MAUI", "ASP.NET" }),
-        new("Jan 2021 — Jan 2022",
-            "Game Programmer · Gameplay & UI",
-            "Grip Digital",
-            "https://www.grip-digital.com/",
-            "Engineered gameplay mechanics and UI systems in Unreal Engine (C++) for PC and console.",
-            new[] { "Unreal", "C++", "UI" }),
-        new("Mar 2019 — Dec 2020",
-            ".NET Programmer · Backend & Cloud",
-            "Rationis",
-            "https://www.rationis.eu/",
-            "ARC remote-management system on .NET / ASP.NET / Xamarin Forms. Cloud-based architecture on Azure for Quadient Inspire Cloud.",
-            new[] { ".NET Core", "Azure", "React", "SQL" }),
-        new("Nov 2017 — Mar 2019",
-            "Junior .NET Programmer · Full-Stack",
-            "Unicorn",
-            "https://unicorn.com/",
-            "Energy-sector software for Nordic markets. Damas project — backend and frontend on Angular, Knockout, ASP.NET.",
-            new[] { ".NET", "Angular", "Knockout" }),
-        new("Jun 2017 — Oct 2018",
-            "Junior Programmer · .NET & Mobile",
-            "Profi Credit Czech a.s.",
-            null,
-            "Designed and shipped an internal Xamarin app, with WCF services bridging mobile to backend.",
-            new[] { "Xamarin", "WCF", "ASP.NET" }),
-        new("Apr 2017 — Mar 2018",
-            "Linux Administrator",
-            "3N",
-            null,
-            "Automated admin tasks; configured Docker, Nomad, Terraform and Ansible across servers.",
-            new[] { "Linux", "Docker", "Ansible" }),
-        new("Aug 2015 — Jan 2017",
-            "Junior Web Developer",
-            "Develox s.r.o",
-            null,
-            "Static sites, e-shops and web apps in ASP.NET / C# / HTML.",
-            new[] { "ASP.NET", "C#" }),
-        new("Apr 2013 — Mar 2014",
-            "IT Service Technician",
-            "VT Data",
-            "https://www.vtdata.cz/",
-            "Repaired and maintained computers, laptops, servers and printers. First step into the trade.",
-            new[] { "Hardware" }),
+            "Strengthened backend fundamentals including networking, API integration, and .NET Framework.",
+            new[] { "Internship", "C#", ".Net Framework" },
+            null),
     };
 }
