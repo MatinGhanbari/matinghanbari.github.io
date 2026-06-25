@@ -6,9 +6,10 @@
     </div>
 
     <p style="margin-top: 0; margin-bottom: 28px; max-width: 60ch; color: var(--fg-dim);">
-        Specialized game programmer with <b>10+ years of software engineering</b> experience.
-        Primary focus: <b>Unreal Engine (C++)</b> and <b>Godot (C#)</b>. Comfortable across
-        backend, cloud and cross-platform stacks when the job calls for it.
+        Backend Software Engineer with deep expertise in designing scalable distributed systems and robust microservices using the .NET ecosystem, DDD, and CQRS.
+        I specialize in crafting high-performance, event-driven architectures, utilizing technologies like PostgreSQL, RabbitMQ, and Redis to ensure system reliability and high availability. 
+        My development philosophy is anchored in clean code practices—including SOLID, TDD, and design patterns—complemented by strong DevOps capabilities in Docker and CI/CD pipelines. 
+        I thrive in Agile environments, consistently delivering high-quality solutions while contributing to team success through technical mentorship and architectural leadership.
     </p>
 
     @foreach (var block in Blocks)
@@ -34,36 +35,48 @@
 
     private static readonly SkillBlock[] Blocks =
     {
-        new("01", "Languages", new[]
+        new("01", "Frameworks & Libraries", new[]
         {
-            new Skill("C#", 5),
-            new Skill("C++", 4),
-            new Skill("TypeScript", 4),
-            new Skill("GDScript", 3),
-            new Skill("HTML / CSS", 4),
-        }),
-        new("02", "Game Engines", new[]
-        {
-            new Skill("Unreal Engine", 5),
-            new Skill("Godot", 4),
-            new Skill("Replication & Networking", 4),
-            new Skill("Gameplay Systems", 5),
-            new Skill("UI Implementation", 4),
-        }),
-        new("03", "Backend & Cloud", new[]
-        {
-            new Skill(".NET / ASP.NET", 5),
+            new Skill(".NET / ASP.NET Core", 5),
             new Skill("Blazor", 4),
-            new Skill("REST APIs", 4),
-            new Skill("SQL", 4),
-            new Skill("Azure", 3),
-            new Skill("Docker", 3),
+            new Skill("EF Core", 5),
+            new Skill("Dapper", 5),
+            new Skill("MediatR", 5),
+            new Skill("Hangfire", 5),
         }),
-        new("04", "Cross-Platform", new[]
+        new("02", "Architecture & System Design", new[]
         {
-            new Skill(".NET MAUI", 4),
-            new Skill("Xamarin Forms", 4),
-            new Skill("WPF", 3),
+            new Skill("Microservices", 5),
+            new Skill("Distributed Systems", 4),
+            new Skill("Event-Driven Architecture", 4),
+            new Skill("DDD", 5),
+            new Skill("CQRS", 5),
+            new Skill("Clean Architecture", 5),
+            new Skill("High Availability", 4),
+        }),
+        new("03", "Databases & Message Brokers", new[]
+        {
+            new Skill("MS SQL Server", 5),
+            new Skill("PostgreSQL", 4),
+            new Skill("Redis", 4),
+            new Skill("RabbitMQ", 4),
+            new Skill("MongoDB", 4),
+        }),
+        new("04", "DevOps & Infrastructure", new[]
+        {
+            new Skill("Docker", 5),
+            new Skill("CI/CD Pipelines", 5),
+            new Skill("Git", 5),
+            new Skill("MinIO", 4),
+        }),
+        new("05", "Engineering Practices", new[]
+        {
+            new Skill("SOLID", 5),
+            new Skill("Design Patterns", 5),
+            new Skill("TDD", 5),
+            new Skill("Unit/Integration Testing", 5),
+            new Skill("Agile/Scrum", 4),
+            new Skill("Mentorship", 4),
         }),
     };
 }

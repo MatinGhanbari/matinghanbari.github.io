@@ -7,9 +7,9 @@
         <span class="rule"></span>
     </div>
 
-    <h2 style="margin-bottom: 6px;">Professional</h2>
+    <h2 style="margin-bottom: 6px;">Projects</h2>
     <p style="margin: 0 0 18px; color: var(--fg-dim); font-size: 14px;">
-        Commercial titles I&rsquo;ve contributed to as a gameplay or systems programmer.
+        Top selected projects where I’ve contributed.
     </p>
 
     <div class="strip-controls">
@@ -49,13 +49,13 @@
         </div>
     </div>
 
-    <h2 style="margin: 56px 0 6px;">Itch.io · Jams &amp; Experiments</h2>
+    <h2 style="margin: 56px 0 6px;">Entertainment Projects</h2>
     <p style="margin: 0 0 4px; color: var(--fg-dim); font-size: 14px;">
-        Smaller games and prototypes — most made in jams with friends.
+        Smaller projects — made with friends for fun.
     </p>
 
     <div class="itch-grid">
-        @foreach (var g in ItchEntries)
+        @foreach (var g in EntertainmentEntries)
         {
             <a class="itch-card reveal" href="@g.Href" target="_blank" rel="noopener">
                 <div class="top">
@@ -85,48 +85,19 @@
 
     private static readonly Shipped[] ShippedTitles =
     {
-        new("The Last Oricru", "2022", "Gameplay Systems", "images/the-last-oricru.jpg",
-            "Story-driven action-RPG set in a sci-fi medieval world, focused on impactful player choices and co-op gameplay.",
-            "Gameplay & networking · Unreal · C++",
+        new("NexGen.MediatR.Extensions.Caching", "2026", "NugetPackage", 
+            "https://raw.githubusercontent.com/MatinGhanbari/NexGen.MediatR.Extensions.Caching/main/assets/images/logo.png",
+            "A lightweight and flexible library that extends MediatR to provide seamless caching and cache invalidation for requests using pipeline behaviors in .NET applications.",
+            "C# · Caching · Redis · Garnet · MemoryCache · Mediator",
             new[]
             {
-                new ProjectLink("Steam", "https://store.steampowered.com/app/1663640/The_Last_Oricru/"),
-                new ProjectLink("Site",  "https://lastoricru.com/"),
-            }),
-        new("Phantom Fury", "2024", "Gameplay Systems", "images/phantom-fury.jpg",
-            "Retro-inspired first-person shooter with fast-paced action, creative weapons and a cross-country road trip.",
-            "Gameplay · Unreal · C++",
-            new[]
-            {
-                new ProjectLink("Steam", "https://store.steampowered.com/app/1733240/Phantom_Fury/"),
-                new ProjectLink("Site",  "https://www.slipgate-ironworks.com/phantom-fury/"),
-            }),
-        new("Beat Saber", "2018", "Live Ops · Updates", "images/beat-saber.jpg",
-            "Award-winning VR rhythm game where players slash beats to music. Contributing on live updates and platform work.",
-            "Gameplay · Unreal · C++",
-            new[]
-            {
-                new ProjectLink("Steam", "https://store.steampowered.com/app/620980/Beat_Saber/"),
-                new ProjectLink("Site",  "https://beatsaber.com/"),
-            }),
-        new("Darkest Dungeon", "2016", "Contributor", "images/darkest-dungeon.jpg",
-            "Challenging gothic roguelike turn-based RPG about the psychological stresses of adventuring.",
-            "Engineering support",
-            new[]
-            {
-                new ProjectLink("Steam", "https://store.steampowered.com/app/262060/Darkest_Dungeon/"),
-                new ProjectLink("Site",  "https://www.darkestdungeon.com/"),
+                new ProjectLink("Github", "https://github.com/MatinGhanbari/NexGen.MediatR.Extensions.Caching"),
+                new ProjectLink("Nuget",  "https://www.nuget.org/packages/NexGen.MediatR.Extensions.Caching/"),
             }),
     };
 
-    private static readonly ItchEntry[] ItchEntries =
+    private static readonly ItchEntry[] EntertainmentEntries =
     {
-        new("Brain and Gut",        "2024", "Game-jam co-op chaos with three collaborators.", "https://matinghanbari.itch.io/brain-and-gut"),
-        new("Pocketwatch",          "2024", "A short, time-bending puzzle.",                  "https://matinghanbari.itch.io/pocketwatch"),
-        new("Stellar Secrets",      "2024", "Cosmic mystery built with a five-person team.",  "https://matinghanbari.itch.io/stellar-secrets"),
-        new("Night In The Mouseum", "2023", "Tiny adventure, after-hours museum.",            "https://matinghanbari.itch.io/night-in-the-mouseum"),
-        new("Shoot Numbers",        "2022", "Arcade arithmetic, fast and noisy.",             "https://matinghanbari.itch.io/shoot-numbers"),
-        new("Rocket of Milky Way",  "2022", "Cozy launch-and-land arcade loop.",              "https://matinghanbari.itch.io/romw"),
-        new("Submarinened",         "2022", "Submarine survival jam entry.",                  "https://matinghanbari.itch.io/submarinened"),
+        new("MovieHub", "2024", "Movies for free of all genres!", "https://github.com/MatinGhanbari/moviehub"),
     };
 }
