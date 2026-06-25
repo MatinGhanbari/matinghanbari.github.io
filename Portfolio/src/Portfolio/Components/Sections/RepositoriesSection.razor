@@ -1,0 +1,164 @@
+@using System.Net.Http.Json
+@inject HttpClient Http
+@inject NavigationManager Nav
+
+<style>
+    .repo-empty {
+        padding: 24px;
+        text-align: center;
+        color: var(--fg-muted);
+        font-family: var(--font-mono);
+        font-size: 16px;
+    }
+</style>
+
+<section class="sec" id="repositories">
+    <div class="sec-marker" style="margin-top: 32px;">
+        <span class="num">07</span>
+        <span>Public Repositories</span>
+        <span class="rule"></span>
+    </div>
+
+    <div class="repos-head">
+        <div>
+            <h2 style="margin-bottom: 6px;">github.com/matinghanbari</h2>
+            <div class="meta">Public repos · sorted by stars</div>
+        </div>
+        <label class="repo-search">
+            <span>⌕</span>
+            <input @bind="query" @bind:event="oninput" placeholder="filter repositories…" />
+        </label>
+    </div>
+
+    <div class="repo-list">
+        @if (repositories is null)
+        {
+            <div class="repo-empty">Loading repositories…</div>
+        }
+        else
+        {
+            var filtered = Filter(repositories, query);
+            @if (filtered.Count == 0)
+            {
+                <div class="repo-empty">no repositories match &ldquo;@query&rdquo;</div>
+            }
+            else
+            {
+                @foreach (var r in Expanded ? filtered : filtered.Take(3))
+                {
+                    <a class="repo" href="@r.Html_Url" target="_blank" rel="noopener">
+                        <div>
+                            <div class="name">
+                                @r.Name.Replace(".", " ")
+                                <span class="vis">public</span>
+                            </div>
+                            @if (!string.IsNullOrEmpty(r.Description))
+                            {
+                                <p>@r.Description</p>
+                            }
+                            <div class="stats">
+                                @if (!string.IsNullOrEmpty(r.Language))
+                                {
+                                    <kbd><span class="lang">●</span> @r.Language</kbd>
+                                }
+                                <span style="color: gold">★ @r.Stargazers_Count</span>
+                                <span>updated @Relative(r.Pushed_At ?? r.Updated_At)</span>
+                            </div>
+                        </div>
+                        <div class="right">View Repository ↗</div>
+                    </a>
+                }
+
+                @if (!Expanded){
+                    <button class="sec-marker" style="background:transparent;border:none;" 
+                    @onclick="() => ViewMore()" @onclick:preventDefault>
+                        <span class="rule"></span>
+                        <span><span class="arrow">↓</span> view more <span class="arrow">↓</span></span>
+                        <span class="rule"></span>
+                    </button>
+                }
+                else
+                {
+                    <button class="sec-marker" style="background:transparent;border:none;" 
+                    @onclick="() => ViewLess()" @onclick:preventDefault>
+                        <span class="rule"></span>
+                        <span><span class="arrow">↑</span> view less <span class="arrow">↑</span></span>
+                        <span class="rule"></span>
+                    </button>
+                }
+            }
+        }
+    </div>
+</section>
+
+@code {
+    private List<Repo>? repositories;
+    private string query = "";
+    private bool Expanded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var data = await Http.GetFromJsonAsync<List<Repo>>(
+                "https://api.github.com/users/matinghanbari/repos?per_page=100");
+            repositories = (data ?? new())
+                .OrderByDescending(r => r.Pushed_At ?? r.Updated_At)
+                .ToList();
+        }
+        catch
+        {
+            repositories = new List<Repo>();
+        }
+    }
+
+    private void GoHome() => Nav.NavigateTo("/#about");
+
+    private void ViewMore()
+    {
+        Expanded = true;
+    }
+
+    private void ViewLess()
+    {
+        Expanded = false;
+    }
+
+    private static List<Repo> Filter(List<Repo> all, string q)
+    {
+        if (string.IsNullOrWhiteSpace(q))
+            return all
+                .OrderByDescending(x => x.Stargazers_Count)
+                .ToList();
+
+        var needle = q.Trim();
+        return all.Where(r =>
+            (r.Name?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (r.Description?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (r.Language?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false))
+            .OrderByDescending(x => x.Stargazers_Count)
+            .ToList();
+    }
+
+    private static string Relative(DateTime utc)
+    {
+        var span = DateTime.UtcNow - utc;
+        if (span.TotalDays < 1) return "today";
+        if (span.TotalDays < 7) return $"{(int)span.TotalDays}d";
+        if (span.TotalDays < 30) return $"{(int)(span.TotalDays / 7)}w";
+        if (span.TotalDays < 365) return $"{(int)(span.TotalDays / 30)}mo";
+        return $"{(int)(span.TotalDays / 365)}y";
+    }
+
+    private class Repo
+    {
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public string? Html_Url { get; set; }
+        public string? Language { get; set; }
+        public int Stargazers_Count { get; set; }
+        public DateTime? Pushed_At { get; set; }
+        public DateTime Updated_At { get; set; }
+        public bool Fork { get; set; }
+    }
+}
