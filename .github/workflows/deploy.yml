@@ -32,9 +32,9 @@ jobs:
       - name: Add .nojekyll
         run: touch publish/wwwroot/.nojekyll
       
-      - name: Fix base href for GitHub Pages
-        run: |
-          sed -i 's|<base href="/" />|<base href="/matinghanbari.github.io/" />|g' publish/wwwroot/index.html
+      # - name: Fix base href for GitHub Pages
+      #   run: |
+      #     sed -i 's|<base href="/" />|<base href="/matinghanbari.github.io/" />|g' publish/wwwroot/index.html
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
