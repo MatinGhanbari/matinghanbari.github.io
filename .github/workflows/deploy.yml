@@ -29,6 +29,12 @@ jobs:
       - name: Publish Blazor WASM
         run: dotnet publish Portfolio/src/Portfolio/Portfolio.csproj -c Release -o publish
       
+      - name: Copy hashed blazor.webassembly.js
+        run: |
+          cp publish/wwwroot/_framework/blazor.webassembly.*.js publish/wwwroot/_framework/blazor.webassembly.js
+          cp publish/wwwroot/_framework/blazor.webassembly.*.js.br publish/wwwroot/_framework/blazor.webassembly.js.br
+          cp publish/wwwroot/_framework/blazor.webassembly.*.js.gz publish/wwwroot/_framework/blazor.webassembly.js.gz
+        
       - name: Add .nojekyll
         run: touch publish/wwwroot/.nojekyll
       
