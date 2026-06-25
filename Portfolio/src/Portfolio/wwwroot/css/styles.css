@@ -15,8 +15,8 @@ html, body { margin: 0; padding: 0; }
   --A-fg:        #E8E6E1;
   --A-fg-dim:    #9CA0A8;
   --A-fg-muted:  #5F6470;
-  --A-accent:    oklch(0.62 0.13 320);    /* plum */
-  --A-accent-2:  oklch(0.78 0.10 320);
+  --A-accent:    oklch(66.477% 0.06615 233.264);    /* plum */
+  --A-accent-2:  oklch(84.139% 0.05362 211.335);
   --A-accent-soft: oklch(0.62 0.13 320 / 0.14);
 
   /* Direction B — Engine Forge (warm near-black, amber/burnt-orange accent) */
