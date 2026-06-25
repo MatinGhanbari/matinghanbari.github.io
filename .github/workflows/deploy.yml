@@ -20,21 +20,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+      
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
-      - name: Prepare Blazor WASM for GitHub Pages
-        uses: na1307/blazor-github-pages@v4
-        id: prepare
-        with:
-          project-path: Portfolio/src/Portfolio/Portfolio.csproj
+      
+      - name: Publish Blazor WASM
+        run: dotnet publish Portfolio/src/Portfolio/Portfolio.csproj -c Release -o publish
+      
+      - name: Add .nojekyll
+        run: touch publish/wwwroot/.nojekyll
+      
+      - name: Fix base href for GitHub Pages
+        run: |
+          sed -i 's|<base href="/" />|<base href="/matinghanbari.github.io/" />|g' publish/wwwroot/index.html
+      
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ${{ steps.prepare.outputs.wwwroot-path }}
+          path: publish/wwwroot
 
   deploy:
     environment:
