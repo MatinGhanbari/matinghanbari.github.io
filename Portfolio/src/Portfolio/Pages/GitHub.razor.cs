@@ -27,12 +27,17 @@ public partial class GitHub
 
     private static List<Repo> Filter(List<Repo> all, string q)
     {
-        if (string.IsNullOrWhiteSpace(q)) return all;
+        if (string.IsNullOrWhiteSpace(q)) 
+            return all
+                .OrderByDescending(x => x.Stargazers_Count)
+                .ToList();
+        
         var needle = q.Trim();
         return all.Where(r =>
             (r.Name?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false) ||
             (r.Description?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false) ||
             (r.Language?.Contains(needle, StringComparison.OrdinalIgnoreCase) ?? false))
+            .OrderByDescending(x=>x.Stargazers_Count)
             .ToList();
     }
 

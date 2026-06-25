@@ -16,7 +16,7 @@
     <div class="repos-head">
         <div>
             <h2 style="margin-bottom: 6px;">github.com/matinghanbari</h2>
-            <div class="meta">Public repos · sorted by recent activity</div>
+            <div class="meta">Public repos · sorted by stars</div>
         </div>
         <label class="repo-search">
             <span>⌕</span>
@@ -53,9 +53,9 @@
                             <div class="stats">
                                 @if (!string.IsNullOrEmpty(r.Language))
                                 {
-                                    <span><span class="lang">●</span> @r.Language</span>
+                                    <kbd><span class="lang">●</span> @r.Language</kbd>
                                 }
-                                <span>★ @r.Stargazers_Count</span>
+                                <span style="color: gold">★ @r.Stargazers_Count</span>
                                 <span>updated @Relative(r.Pushed_At ?? r.Updated_At)</span>
                             </div>
                         </div>
