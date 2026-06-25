@@ -14,6 +14,7 @@ public partial class NavMenu
         new("education",  "Education",  "04"),
         new("skills",     "Skills",     "05"),
         new("interests",  "Interests",  "06"),
+        new("repositories",  "Repositories",  "07"),
     };
 
     private string activeSection = "about";
