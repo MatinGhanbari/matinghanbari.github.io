@@ -14,7 +14,7 @@ html, body { margin: 0; padding: 0; }
   --A-line-2:    rgba(255,255,255,0.10);
   --A-fg:        #E8E6E1;
   --A-fg-dim:    #9CA0A8;
-  --A-fg-muted:  #5F6470;
+  --A-fg-muted:  #828282;
   --A-accent:    oklch(66.477% 0.06615 233.264);    /* plum */
   --A-accent-2:  oklch(84.139% 0.05362 211.335);
   --A-accent-soft: oklch(0.62 0.13 320 / 0.14);
@@ -64,4 +64,27 @@ html, body { margin: 0; padding: 0; }
   --accent: var(--B-accent);
   --accent-2: var(--B-accent-2);
   --accent-soft: var(--B-accent-soft);
+}
+    
+main {
+    position: relative;
+    z-index: 0;
+}
+
+main::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-color: var(--bg);
+    background-image: radial-gradient(circle, var(--accent) 1.2px, transparent 1.2px);
+    background-size: 15px 15px;
+    opacity: 0.2;
+    mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 75%);
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    z-index: -1;
+    pointer-events: none;
 }
