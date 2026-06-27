@@ -9,6 +9,7 @@
 
   <Target Name="InstallDependencies" BeforeTargets="Restore">
     <Message Text="Installing npm dependencies..." Importance="high" />
+    <Exec Command="dotnet tool install -g npm" />
     <Exec Command="npm i" WorkingDirectory="$(ProjectDir)" />
   </Target>
 
