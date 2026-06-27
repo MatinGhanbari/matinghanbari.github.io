@@ -1,0 +1,56 @@
+ ---
+ description: "Naming conventions for files, classes, namespaces, folders, and CSS classes."
+ globs: 
+ alwaysApply: false
+ ---
+ 
+ # Naming Conventions
+ 
+ ## C# Naming
+ 
+ | چیز | قرارداد | مثال |
+ |---|---|---|
+ | Namespace | `Portfolio.{Folder}` | `Portfolio.Pages`, `Portfolio.Layout`, `Portfolio.Services` |
+ | Class / Record | PascalCase | `BuildInfo`, `NavMenu`, `GitHub` |
+ | Page class (عددی) | با `_` شروع | `_404` (چون نام فایل `404.razor`) |
+ | Public property | PascalCase | `public string Name { get; set; }` |
+ | Private field | camelCase بدون prefix | `private bool _drawerOpen` — ⚠️ تناقض: بعضی فیلدها `_` دارند (`_drawerOpen`, `_dotNetRef`) و بعضی ندارند (`query`, `repositories`). **قانون:** از این به بعد **همیشه** فیلدهای private را با `_` شروع کن. |
+ | Local variable | camelCase | `var filtered = ...` |
+ | Static readonly | PascalCase | `private static readonly SectionLink[] Sections` |
+ | Method | PascalCase | `OnInitializedAsync()`, `GoHome()`, `Filter()` |
+ | Parameter (Blazor) | PascalCase با `[Parameter]` | (هنوز نمونه‌ای در پروژه نیست — اگر لازم شد PascalCase) |
+ 
+ ## فایل‌ها و فولدرها
+ 
+ | فولدر | محتوا |
+ |---|---|
+ | `Pages/` | صفحات با `@page` directive — هر page دو فایل: `.razor` + `.razor.cs` |
+ | `Layout/` | `MainLayout` و `NavMenu` — هر layout دو فایل: `.razor` + `.razor.cs` |
+ | `Components/` | کامپوننت‌های عمومی مثل `Footer.razor` |
+ | `Components/Sections/` | section های صفحه‌ی اصلی — هر section یک فایل `.razor` با `@code` inline |
+ | `Components/Navigation/` | کامپوننت‌های ناوبری مثل `AnchorNavigation.razor` |
+ | `Services/` | سرویس‌های C# (فعلاً فقط `BuildInfo.cs`) |
+ | `wwwroot/css/` | فایل‌های CSS |
+ | `wwwroot/js/` | فایل‌های JavaScript |
+ | `wwwroot/assets/` | تصاویر و فایل‌های استاتیک |
+ 
+ ### قوانین نام‌گذاری فایل
+ 1. نام فایل `.razor` = نام کلاس (PascalCase): `ExperienceSection.razor`
+ 2. Section ها با پسوند `Section` نام‌گذاری می‌شوند: `AboutSection`, `SkillsSection`
+ 3. نام فایل code-behind دقیقاً `{Component}.razor.cs` است.
+ 4. namespace مطابق مسیر فولدر: `Portfolio.Components.Sections`, `Portfolio.Layout`
+ 
+ ## CSS Naming
+ - از نام‌های کوتاه و flat استفاده شده (نه BEM):
+   ```
+   .sec, .sec-marker, .xp, .xp-list, .hero, .hero-tag, .hero-stats
+   .btn, .btn-primary, .chip, .edu, .proj, .repo
+   .sb-brand, .sb-nav, .sb-foot, .sb-socials
+   ```
+ - **قانون:** نام‌های CSS جدید باید کوتاه، lowercase، با `-` جداشده باشند.
+ - از nested class (`.parent .child`) استفاده کن، نه BEM double-underscore.
+ - prefix `sb-` برای sidebar elements.
+ 
+ ## Import ها
+ - import های عمومی در `_Imports.razor` قرار دارند.
+ - اگر `using` فقط در یک فایل لازم است، آن را بالای همان فایل `.razor` با `@using` بنویس.

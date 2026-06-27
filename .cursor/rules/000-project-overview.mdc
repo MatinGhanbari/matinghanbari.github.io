@@ -1,0 +1,24 @@
+ ---
+ description: "Core project overview — always loaded so every prompt knows the stack and critical rules."
+ globs: 
+ alwaysApply: true
+ ---
+ 
+ # Project Overview
+ 
+ **Portfolio website** for Matin Ghanbari — a Blazor WebAssembly (.NET 10) SPA deployed to GitHub Pages.
+ 
+ ## Tech Stack
+ - **Runtime:** .NET 10, Blazor WebAssembly (client-side only, no server)
+ - **Styling:** Pure CSS with CSS custom properties (design tokens). **No Tailwind CSS.**
+ - **Icons:** Font Awesome 6 (solid + brands), loaded via local CSS/JS bundles
+ - **Fonts:** Geist (sans), JetBrains Mono (mono), Instrument Serif (serif) — Google Fonts
+ - **Color system:** Two palettes (Direction A = Studio Slate, Direction B = Engine Forge) switched via `[data-direction]` attribute on `<html>`
+ - **Deployment:** GitHub Actions → `dotnet publish` → GitHub Pages
+ - **PWA:** Service worker enabled
+ 
+ ## Critical Rules (always apply)
+ 1. **همیشه** از CSS custom properties (`--bg`, `--fg`, `--accent`, `--line` و غیره) استفاده کن. هرگز رنگ hard-code نکن.
+ 2. **هرگز** Tailwind، SCSS، یا هیچ پیش‌پردازنده‌ی CSS دیگری اضافه نکن — پروژه فقط از vanilla CSS استفاده می‌کند.
+ 3. **همیشه** پالت دوگانه را رعایت کن: هر رنگ جدید باید هم `--A-*` و هم `--B-*` داشته باشد و در هر دو `[data-direction]` مپ شود.
+ 4. **هرگز** پکیج NuGet جدید اضافه نکن مگر صراحتاً درخواست شده باشد. پروژه عمداً minimal نگه داشته شده.

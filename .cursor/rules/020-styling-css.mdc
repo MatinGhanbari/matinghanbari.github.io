@@ -1,0 +1,101 @@
+ ---
+ description: "Styling rules — CSS custom properties, color system, typography, responsive breakpoints, design patterns."
+ globs: "**/*.razor,**/*.css"
+ alwaysApply: false
+ ---
+ 
+ # Styling & CSS Rules
+ 
+ ## ⚠️ این پروژه از Tailwind استفاده نمی‌کند
+ تمام استایل‌ها با vanilla CSS و CSS custom properties نوشته شده‌اند.
+ **هرگز** کلاس‌های Tailwind utility اضافه نکن.
+ 
+ ## Design Tokens (CSS Custom Properties)
+ 
+ ### رنگ‌ها — دو پالت
+ پالت‌ها در `wwwroot/css/styles.css` تعریف شده و با `[data-direction="A"]` / `[data-direction="B"]` فعال می‌شوند.
+ 
+ | توکن | کاربرد |
+ |---|---|
+ | `--bg` | پس‌زمینه‌ی اصلی |
+ | `--bg-2` | پس‌زمینه‌ی ثانویه (کارت‌ها) |
+ | `--bg-3` | پس‌زمینه‌ی سوم (progress bar, chip) |
+ | `--line` | خط جداکننده‌ی ظریف (6% opacity) |
+ | `--line-2` | خط جداکننده‌ی قوی‌تر (10% opacity) |
+ | `--fg` | متن اصلی |
+ | `--fg-dim` | متن ثانویه |
+ | `--fg-muted` | متن کم‌رنگ (meta, caption) |
+ | `--accent` | رنگ تأکیدی اصلی |
+ | `--accent-2` | رنگ تأکیدی ثانویه |
+ | `--accent-soft` | رنگ تأکیدی نرم (selection, hover) |
+ 
+ **قانون:** هر رنگ جدید باید:
+ 1. به‌صورت `--A-*` و `--B-*` در `:root` تعریف شود.
+ 2. در هر دو بلاک `[data-direction]` به `--*` مپ شود.
+ 3. در کد CSS فقط از `--*` (نه `--A-*` / `--B-*`) استفاده شود.
+ 
+ ### تایپوگرافی
+ ```css
+ --font-sans:  "Geist", ui-sans-serif, system-ui, sans-serif;
+ --font-mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+ --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+ ```
+ - بدنه‌ی متن: `var(--font-sans)`.
+ - عناصر mono (شماره‌ی section, meta): `var(--font-mono)`.
+ - **همیشه** `font-family` را با variable بنویس، هرگز fontname مستقیم.
+ 
+ ## فایل‌بندی CSS
+ | فایل | محتوا |
+ |---|---|
+ | `wwwroot/css/styles.css` | متغیرهای `:root`، پالت‌ها، پترن پس‌زمینه |
+ | `wwwroot/css/app.css` | تمام layout و component styles (یک فایل minified) |
+ 
+ **قانون:** استایل‌های جدید را در `app.css` اضافه کن. فقط متغیرهای سراسری را در `styles.css` بنویس.
+ اگر استایلی فقط برای یک کامپوننت خاص لازم است، می‌توان از `<style>` scoped درون فایل `.razor` استفاده کرد (مانند `.repo-empty` در `GitHub.razor`).
+ 
+ ## Responsive Breakpoints
+ ```css
+ /* Tablet / small desktop */
+ @media (max-width: 1200px) and (min-width: 901px) { ... }
+ 
+ /* Sidebar collapses to mobile drawer */
+ @media (max-width: 900px) { ... }
+ 
+ /* Small mobile */
+ @media (max-width: 600px) { ... }
+ 
+ /* Extra small mobile */
+ @media (max-width: 480px) { ... }
+ ```
+ **همیشه** از همین breakpointها استفاده کن. هرگز breakpoint سفارشی اضافه نکن مگر واقعاً ضروری باشد.
+ 
+ ## Layout Grid
+ - `app`: `grid-template-columns: 240px minmax(0, 1fr)`
+ - `main.content`: `max-width: 920px`, `padding: 96px 64px 160px`
+ - زیر 900px sidebar به drawer تبدیل می‌شود.
+ 
+ ## Design Patterns پرکاربرد
+ 
+ ### کارت / بلاک
+ ```css
+ border: 1px solid var(--line);
+ border-radius: 10px;
+ transition: border-color .15s;
+ ```
+ hover: `border-color: var(--accent)`.
+ 
+ ### متن uppercase + letter-spacing (label)
+ ```css
+ text-transform: uppercase;
+ letter-spacing: .08em;
+ font-size: 11px;
+ color: var(--fg-dim);
+ ```
+ 
+ ### انیمیشن Scroll Reveal
+ ```css
+ .reveal { opacity: 0; transform: translateY(8px); transition: opacity .8s, transform .8s; }
+ .reveal.in { opacity: 1; transform: translateY(0); }
+ ```
+ - JS (`initScrollReveal`) با IntersectionObserver کلاس `.in` را اضافه می‌کند.
+ - **همیشه** عناصر اصلی هر section جدید را `class="... reveal"` بده.

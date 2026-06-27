@@ -1,0 +1,87 @@
+ ---
+ description: "Rules for services, data models, HttpClient usage, and async patterns."
+ globs: "Portfolio/src/Portfolio/Services/**/*.cs,Portfolio/src/Portfolio/Pages/**/*.cs"
+ alwaysApply: false
+ ---
+ 
+ # Services & Data Rules
+ 
+ ## Services
+ 
+ ### BuildInfo (الگوی Static Service)
+ ```csharp
+ // Services/BuildInfo.cs
+ public static class BuildInfo
+ {
+     public static string Stamp { get; } = $"{BuildDate}-{GitSha}";
+ }
+ ```
+ - `BuildInfo` یک کلاس `static` است و در DI ثبت نشده. مستقیماً با `BuildInfo.Stamp` استفاده می‌شود.
+ - **قانون:** اگر سرویس جدیدی state ندارد و pure/static است، همین الگو را دنبال کن.
+ - اگر سرویس state دارد یا به `HttpClient` نیاز دارد، آن را در `Program.cs` با `builder.Services.AddScoped<T>()` ثبت کن.
+ 
+ ## HttpClient
+ 
+ ### الگوی فعلی (مستقیم)
+ `HttpClient` با `AddScoped` در `Program.cs` ثبت شده:
+ ```csharp
+ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+ ```
+ 
+ و مستقیماً در Page ها inject و استفاده می‌شود:
+ ```csharp
+ // GitHub.razor.cs
+ var data = await Http.GetFromJsonAsync<List<Repo>>(
+     "https://api.github.com/users/matinghanbari/repos?per_page=100");
+ ```
+ 
+ **قوانین:**
+ 1. **همیشه** از `GetFromJsonAsync<T>` استفاده کن (نه `GetAsync` + دستی deserialize).
+ 2. **همیشه** فراخوانی HTTP را در `try/catch` قرار بده و در `catch` مقدار پیش‌فرض (لیست خالی یا `null`) ست کن.
+ 3. **همیشه** state بارگذاری را مدیریت کن: فیلد `null` = loading, مقدار = loaded.
+ 
+ ```csharp
+ // الگوی صحیح:
+ private List<Repo>? repositories; // null = loading
+ 
+ protected override async Task OnInitializedAsync()
+ {
+     try
+     {
+         repositories = await Http.GetFromJsonAsync<List<Repo>>(url);
+     }
+     catch
+     {
+         repositories = new();
+     }
+ }
+ ```
+ 
+ ## Data Models
+ 
+ ### الگوی Nested Record/Class
+ مدل‌های داده به‌صورت `private record` یا `private class` داخل همان component/page تعریف می‌شوند:
+ ```csharp
+ private record EduEntry(string When, string School, string Degree, string? Desc);
+ private record Skill(string Name, int Level);
+ ```
+ 
+ برای مدل‌های API (مثل GitHub) از `private class` با property names مطابق JSON استفاده شده:
+ ```csharp
+ private class Repo
+ {
+     public string? Name { get; set; }
+     public int Stargazers_Count { get; set; }
+ }
+ ```
+ 
+ **قوانین:**
+ 1. اگر مدل فقط در یک component استفاده می‌شود، آن را **داخل** همان component تعریف کن.
+ 2. اگر مدل در چند component مشترک است، آن را در `Models/` قرار بده (هنوز چنین موردی وجود ندارد).
+ 3. برای داده‌ی immutable از `record` استفاده کن. برای مدل‌های API deserialization از `class` با `{ get; set; }`.
+ 4. داده‌ی استاتیک (مثل لیست تجربیات) را `private static readonly` تعریف کن.
+ 
+ ## Async Patterns
+ - **همیشه** از `async/await` استفاده کن. هرگز `.Result` یا `.Wait()` صدا نزن.
+ - متدهای void async (مثل event handler ها) را `async void` بنویس (فقط برای event handlers).
+ - برای بقیه **همیشه** `async Task` یا `async Task<T>` برگردان.

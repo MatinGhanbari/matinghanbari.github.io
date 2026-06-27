@@ -1,0 +1,87 @@
+ ---
+ description: "Rules for building Blazor components, pages, and layouts — code-behind pattern, lifecycle, DI."
+ globs: "**/*.razor,**/*.razor.cs"
+ alwaysApply: false
+ ---
+ 
+ # Blazor Component Rules
+ 
+ ## Code-behind Pattern
+ 
+ دو الگوی موجود در پروژه:
+ 
+ ### الگوی ۱ — Code-behind کامل (برای Pages و Layout)
+ هر فایل `.razor` یک فایل `.razor.cs` همنام دارد. کلاس `partial` است.
+ 
+ ```csharp
+ // Pages/GitHub.razor.cs
+ namespace Portfolio.Pages;
+ 
+ public partial class GitHub
+ {
+     private List<Repo>? repositories;
+     // ...
+ }
+ ```
+ 
+ **همیشه** از این الگو برای فایل‌های داخل `Pages/` و `Layout/` استفاده کن — حتی اگر بدنه‌ی کلاس خالی باشد:
+ ```csharp
+ // Pages/Index.razor.cs
+ namespace Portfolio.Pages;
+ 
+ public partial class Index { }
+ ```
+ 
+ ### الگوی ۲ — Inline `@code` (برای Section Components)
+ کامپوننت‌های داخل `Components/Sections/` از بلاک `@code {}` درون همان فایل `.razor` استفاده می‌کنند.
+ داده‌ی استاتیک (مثل آرایه‌ی `Entries`) به‌صورت `private static readonly` تعریف می‌شود.
+ 
+ ```razor
+ @code {
+     private record EduEntry(string When, string School, string Degree, string? Desc);
+ 
+     private static readonly EduEntry[] Entries = { ... };
+ }
+ ```
+ 
+ **قانون:** برای هر section جدید در `Components/Sections/`، از الگوی inline `@code` پیروی کن.
+ برای هر page یا layout جدید، **همیشه** فایل `.razor.cs` جداگانه بساز.
+ 
+ ## Dependency Injection
+ - تزریق با `@inject` در بالای فایل `.razor` انجام می‌شود (نه `[Inject]` attribute در code-behind):
+   ```razor
+   @inject HttpClient Http
+   @inject IJSRuntime JS
+   @inject NavigationManager Nav
+   ```
+ - **هرگز** سرویسی را با `[Inject]` در فایل `.razor.cs` تزریق نکن.
+ 
+ ## JS Interop
+ - تمام توابع JS در `wwwroot/js/scripts.js` تعریف می‌شوند.
+ - نام‌گذاری: `PascalCase` برای توابع global (مثل `BlazorScrollToId`, `PortfolioObserveSections`).
+ - فراخوانی از C#: `await JSRuntime.InvokeVoidAsync("FunctionName", args)`.
+ - هرگز inline `<script>` در فایل `.razor` قرار نده.
+ 
+ ## Section Component Structure
+ هر section جدید باید این ساختار HTML را رعایت کند:
+ ```razor
+ <section class="sec" id="section-id">
+     <div class="sec-marker">
+         <span class="num">XX</span>
+         <span>Section Title</span>
+         <span class="rule"></span>
+     </div>
+     @* Content with .reveal class for scroll animation *@
+ </section>
+ ```
+ - `id` برابر با slug مورد استفاده در `NavMenu.Sections` باشد.
+ - از کلاس `reveal` روی عناصر داخلی برای انیمیشن scroll-reveal استفاده کن.
+ 
+ ## Lifecycle
+ - `OnInitializedAsync` برای fetch داده از API.
+ - `OnAfterRenderAsync(firstRender)` برای JS interop اولیه.
+ - `IAsyncDisposable` را implement کن اگر observer یا event listener ثبت می‌کنی (مثل `NavMenu`).
+ 
+ ## Routing
+ - مسیرها با `@page "/route"` در بالای فایل `.razor` تعریف می‌شوند.
+ - **همیشه** `<HeadContent>` با canonical link و `<PageTitle>` اضافه کن.
