@@ -7,16 +7,15 @@
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
   </PropertyGroup>
 
-  <Target Name="InstallDependencies" BeforeTargets="Restore">
+  <!-- <Target Name="InstallDependencies" BeforeTargets="Restore">
     <Message Text="Installing npm dependencies..." Importance="high" />
-    <Exec Command="dotnet tool install -g npm" />
     <Exec Command="npm i" WorkingDirectory="$(ProjectDir)" />
   </Target>
 
   <Target Name="BuildApplication" AfterTargets="InstallDependencies">
     <Message Text="Building application..." Importance="high" />
-    <Exec Command="npm build" WorkingDirectory="$(ProjectDir)" />
-  </Target>
+    <Exec Command="npm run build" WorkingDirectory="$(ProjectDir)" />
+  </Target> -->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.9" />
